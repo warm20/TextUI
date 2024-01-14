@@ -9,10 +9,12 @@ class Screen:
         self.title = title
         self.title_style = title_style
         self.border = border_style
+        self.cur = Curser.Curser()
         self.frame = [[" " for i in range(h)] for j in range(w)]
         pass
 
     def DrawScreen(self):
+        self.cur.MoveTo(0,0)
         # Draw top bar
         print(self.border[L_T],end="")
         for i in range(self.w):
