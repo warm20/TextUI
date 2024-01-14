@@ -10,24 +10,34 @@ class Screen:
         self.title_style = title_style
         self.border = border_style
         self.cur = Curser.Curser()
-        self.frame = [[" " for i in range(h)] for j in range(w)]
         pass
 
     def DrawScreen(self):
+        self.cur.Clear()
         self.cur.MoveTo(0,0)
         # Draw top bar
         print(self.border[L_T],end="")
         for i in range(self.w):
             print(self.border[LINE],end="")
         print(self.border[R_T]+"\033[K")
+        # Draw title
+        if len(self.title)>self.w:
+            self.cur.MoveTo(1,2)
+            print(self.title[0:self.w],end="")
+        else:
+            self.cur.MoveTo(1,2)
+            print(self.title,end="")
+
         # Draw body
         for i in range(self.h):
-            print(self.border[VER],end="")
-            for j in range(self.w):
-                print(self.frame[j][i], end="")
-            print(self.border[VER])
+            self.cur.MoveTo(0,i+2)
+            print(self.border[VER], end="")
+            self.cur.MoveTo(self.w+2,i+2)
+            print(self.border[VER], end="")
+        print()
         # Draw bottom
         print(self.border[L_B],end="")
         for i in range(self.w):
             print(self.border[LINE],end="")
         print(self.border[R_B])
+    
