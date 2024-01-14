@@ -22,11 +22,23 @@ class Screen:
         print(self.border[R_T]+"\033[K")
         # Draw title
         if len(self.title)>self.w:
-            self.cur.MoveTo(1,2)
+            self.cur.MoveTo(2,0)
             print(self.title[0:self.w],end="")
         else:
-            self.cur.MoveTo(1,2)
-            print(self.title,end="")
+            if self.title_style == LEFT:
+                self.cur.MoveTo(2,0)
+                print(self.title,end="")
+            elif self.title_style == RIGHT:
+                self.cur.MoveTo(self.w-len(self.title)+2,0)
+                print(self.title, end="")
+            else:
+                ms = (self.w//2-len(self.title)//2)%2
+                self.cur.MoveTo(
+                    self.w//2-len(self.title)//2+int("12"[ms]),
+                    0
+                )
+                print(self.title, end="")
+                ...
 
         # Draw body
         for i in range(self.h):
